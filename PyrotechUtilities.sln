@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PyrotechUtilities", "PyrotechUtilities\PyrotechUtilities.csproj", "{66D22C32-C015-4D3E-8FEC-95F1A15DF917}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PyrotechUtilities.Tests", "PyrotechUtilities.Tests\PyrotechUtilities.Tests.csproj", "{DE049630-1E71-4012-99DA-B5E2817A7BCA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{66D22C32-C015-4D3E-8FEC-95F1A15DF917}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66D22C32-C015-4D3E-8FEC-95F1A15DF917}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66D22C32-C015-4D3E-8FEC-95F1A15DF917}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66D22C32-C015-4D3E-8FEC-95F1A15DF917}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE049630-1E71-4012-99DA-B5E2817A7BCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE049630-1E71-4012-99DA-B5E2817A7BCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE049630-1E71-4012-99DA-B5E2817A7BCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE049630-1E71-4012-99DA-B5E2817A7BCA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DB0E7D00-C3BF-4B06-9657-4C819290A73D}
+	EndGlobalSection
+EndGlobal
