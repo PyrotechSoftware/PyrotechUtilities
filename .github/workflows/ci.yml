@@ -16,6 +16,16 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+    
+    - name: Install OpenCover
+      uses: ConorMacBride/install-package@v1.1.0
+      with: 
+        choco: opencover.portable
+
+    - name: Install CodeCov
+      uses: ConorMacBride/install-package@v1.1.0
+      with: 
+        choco: codecov
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
@@ -31,9 +41,13 @@ jobs:
       
     - name: Test
       run: dotnet test -c Release --no-build --no-restore --blame-hang --blame-hang-timeout 60s /property:GenerateFullPaths=true /consoleloggerparameters:NoSummary /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:ExcludeByAttribute='ExcludeFromCodeCoverage' /p:Include='*' /p:SkipAutoProps=true /p:CoverletOutput='./TestResults/'
+
+    - name: Test using OpenCover
+      run: 
+        OpenCover.Console.exe -register:user -target:"%xunit20%\xunit.console.x86.exe" -targetargs:".\PyrotechUtilities.Tests\bin\Debug\PyrotechUtilities.Tests.dll -noshadow" -filter:"[PyrotechUtilities.Tests*]*" -output:".\MyProject_coverage.xml"           
       
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        file: coverage.cobertura.xml
+        file: MyProject_coverage.xml
