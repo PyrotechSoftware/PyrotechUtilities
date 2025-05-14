@@ -33,7 +33,7 @@ jobs:
       run: dotnet test -c Release --no-build --no-restore --blame-hang --blame-hang-timeout 60s /property:GenerateFullPaths=true /consoleloggerparameters:NoSummary /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:ExcludeByAttribute='ExcludeFromCodeCoverage' /p:Include='*' /p:SkipAutoProps=true /p:CoverletOutput='./TestResults/'
       
     - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v5
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        file: coverage.cobertura.xml
+        files: ./PyrotechUtilities.Tests/TestResults/coverage.cobertura.xml
