@@ -6,4 +6,28 @@
 	<RootNamespace></RootNamespace>
   </PropertyGroup>
 
+	<PropertyGroup>
+		<PackageId>PyrotechUtilities</PackageId>
+		<VersionPrefix>1.0.0</VersionPrefix>
+		<VersionSuffix>$(VersionSuffix)</VersionSuffix>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageIcon>Nuget.png</PackageIcon>
+		<Company>Pyrotech Software</Company>
+		<Authors>Bartthefish</Authors>
+		<Copyright>Copyright 2025 Pyrotech Software</Copyright>
+		<PackageTags>Pyrotech, Utilities, Extensions</PackageTags>
+		<Description>Various Extension methods for dealing with Enum, DateOnly and Numeric types</Description>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\LICENSE">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Include="..\Nuget.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+	
 </Project>

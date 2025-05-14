@@ -1,0 +1,53 @@
+name: Release
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: ["master"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: |
+          8.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build -c Release --no-restore /nowarn:CS1591,CS0114
+      
+    - name: Test
+      run: dotnet test -c Release --no-build --no-restore --blame-hang --blame-hang-timeout 60s /property:GenerateFullPaths=true /consoleloggerparameters:NoSummary /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:ExcludeByAttribute='ExcludeFromCodeCoverage' /p:Include='*' /p:SkipAutoProps=true /p:CoverletOutput='./TestResults/'
+      
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v5
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: ./PyrotechUtilities.Tests/TestResults/coverage.cobertura.xml
+        
+    - name: Define Source
+      run: dotnet nuget add source --username PyrotechSoftware --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/PyrotechSoftware/index.json"
+
+    - name: Define Azure DevOps Source
+      run: dotnet nuget add source --username PyrotechSoftware --password ${{ secrets.DEVOPS_TOKEN}} --store-password-in-clear-text --name devops "https://pkgs.dev.azure.com/plannerdev/_packaging/PlannerDevFeed/nuget/v3/index.json"
+      
+    - name: Pack
+      run: dotnet pack PyrotechUtilities/PyrotechUtilities.csproj -c Release --no-build --no-restore -o packages/
+
+    - name: Publish
+      run: dotnet nuget push "packages/*.nupkg" --source "github" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
+
+    - name: Publish DevOps
+      run: dotnet nuget push "packages/*.nupkg" --source "devops" --api-key az --skip-duplicate
