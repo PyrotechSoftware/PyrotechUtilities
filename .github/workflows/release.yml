@@ -44,13 +44,10 @@ jobs:
       run: dotnet nuget add source --username PyrotechSoftware --password ${{ secrets.DEVOPS_TOKEN}} --store-password-in-clear-text --name devops "https://pkgs.dev.azure.com/plannerdev/_packaging/PlannerDevFeed/nuget/v3/index.json"
       
     - name: Pack
-      working-directory: src
       run: dotnet pack PyrotechUtilities/PyrotechUtilities.csproj -c Release --no-build --no-restore -o packages/
 
     - name: Publish
-      working-directory: src
       run: dotnet nuget push "packages/*.nupkg" --source "github" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
 
     - name: Publish DevOps
-      working-directory: src
       run: dotnet nuget push "packages/*.nupkg" --source "devops" --api-key az --skip-duplicate
