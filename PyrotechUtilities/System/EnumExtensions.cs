@@ -93,35 +93,30 @@
         /// <typeparam name="T">The Enumeration Type.</typeparam>
         /// <returns>The enumeration value.</returns>
         /// <exception cref="ArgumentException">Type is not an enumeration / is not valid.</exception>
-        public static T GetEnum<T>(this string key) where T : struct, Enum
+        public static T? GetEnum<T>(this string key) where T : struct, Enum
         {
-            if (key == null || string.IsNullOrEmpty(key))
+            if (key == null || string.IsNullOrEmpty(key) || string.IsNullOrWhiteSpace(key))
             {
-                return default;
-            }
-
-            if (!typeof(T).IsEnum)
-            {
-                throw new ArgumentException("Type must be an enum");
+                return null;
             }
 
             var values = EnumIdentificationDictionary<T>();
 
             if (values == null)
-                return default;
+                return null;
 
             if (values.TryGetValue(key, out string? value))
             {
-                return Enum.TryParse<T>(value, out var identificationResult) ? identificationResult : throw new ArgumentException("Invalid Identification");
+                return Enum.TryParse<T>(value, out var identificationResult) ? identificationResult : (T?)null;
             }
 
             var descriptions = EnumDescriptionDictionary<T>();
 
             return descriptions == null
-                ? default
+                ? null
                 : descriptions.TryGetValue(key, out string? descriptionValue)
-                ? Enum.TryParse<T>(descriptionValue, out var descriptionResult) ? descriptionResult : throw new ArgumentException("Invalid Description")
-                : Enum.TryParse<T>(key, out var result) ? result : throw new ArgumentException("Invalid Identification");
+                ? Enum.TryParse<T>(descriptionValue, out var descriptionResult) ? descriptionResult : (T?)null
+                : Enum.TryParse<T>(key, out var result) ? result : (T?)null;
         }
 
         /// <summary>

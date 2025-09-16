@@ -8,7 +8,7 @@
 
 	<PropertyGroup>
 		<PackageId>PyrotechUtilities</PackageId>
-		<VersionPrefix>1.1.0</VersionPrefix>
+		<VersionPrefix>1.2.0</VersionPrefix>
 		<VersionSuffix>$(VersionSuffix)</VersionSuffix>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageIcon>Nuget.png</PackageIcon>

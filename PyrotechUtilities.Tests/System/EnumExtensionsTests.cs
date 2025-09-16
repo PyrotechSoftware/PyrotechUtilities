@@ -107,9 +107,9 @@ public class EnumExtensionsTests
     }
 
     [Fact]
-    public void GetEnum_ThrowsArgumentExceptionForInvalidValue()
+    public void GetEnum_ReturnsNullForInvalidValue()
     {
-        Assert.Throws<ArgumentException>(() => "Invalid".GetEnum<TestEnum>());
+        Assert.Null("Invalid".GetEnum<TestEnum>());
     }
 
     [Fact]
@@ -125,5 +125,14 @@ public class EnumExtensionsTests
     {
         var values = new[] { TestEnum.First, TestEnum.Second };
         Assert.False(TestEnum.Third.In(values));
+    }
+
+    [Fact]
+    public void GetEnum_ReturnsNullForWhitespace()
+    {
+        Assert.Null(" ".GetEnum<TestEnum>());
+        Assert.Null("\t".GetEnum<TestEnum>());
+        Assert.Null("\n".GetEnum<TestEnum>());
+        Assert.Null("   ".GetEnum<TestEnum>());
     }
 }
