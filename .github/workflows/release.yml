@@ -69,7 +69,7 @@ jobs:
         user: ${{ secrets.NUGET_USER }}
 
     - name: Publish to NuGet.org
-      run: dotnet nuget push "packages/*.nupkg" --source "https://api.nuget.org/v3/index.json" -api-key ${{steps.login.outputs.NUGET_API_KEY}} --skip-duplicate
+      run: dotnet nuget push "packages/*.nupkg" --source "https://api.nuget.org/v3/index.json" --api-key ${{steps.login.outputs.NUGET_API_KEY}} --skip-duplicate
 
     - name: Create GitHub Release
       uses: actions/create-release@v1
