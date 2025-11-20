@@ -17,13 +17,12 @@
 		<PackageTags>Pyrotech, Utilities, Extensions</PackageTags>
 		<Description>Various Extension methods for dealing with Enum, DateOnly, TimeOnly and Numeric types</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Update="Nuget.png">
-	    <Pack>True</Pack>
-	    <PackagePath>\</PackagePath>
-	  </None>
+	  <None Include="..\Nuget.png" Pack="true" PackagePath="Nuget.png" />
+	  <None Include="..\README.md" Pack="true" PackagePath="README.md" />
 	</ItemGroup>
 	
 </Project>
