@@ -8,6 +8,7 @@ on:
 permissions:
   id-token: write
   contents: read
+  packages: write
 
 jobs:
   build:
@@ -20,6 +21,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
+    - name: Extract version from tag
+      id: extract_version
+      run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
@@ -30,11 +35,11 @@ jobs:
       run: dotnet restore
 
     - name: Build
-      run: dotnet build -c Release --no-restore /nowarn:CS1591,CS0114
-      
+      run: dotnet build -c Release --no-restore /nowarn:CS1591,CS0114 -p:Version=${{ env.VERSION }}
+
     - name: Test
       run: dotnet test -c Release --no-build --no-restore --blame-hang --blame-hang-timeout 60s /property:GenerateFullPaths=true /consoleloggerparameters:NoSummary /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:ExcludeByAttribute='ExcludeFromCodeCoverage' /p:Include='*' /p:SkipAutoProps=true /p:CoverletOutput='./TestResults/'
-      
+
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v5
       with:
@@ -48,7 +53,7 @@ jobs:
       run: dotnet nuget add source --username PyrotechSoftware --password ${{ secrets.DEVOPS_TOKEN}} --store-password-in-clear-text --name devops "https://pkgs.dev.azure.com/plannerdev/_packaging/PlannerDevFeed/nuget/v3/index.json"
       
     - name: Pack
-      run: dotnet pack PyrotechUtilities/PyrotechUtilities.csproj -c Release --no-build --no-restore -o packages/
+      run: dotnet pack PyrotechUtilities/PyrotechUtilities.csproj -c Release --no-build --no-restore -o packages/ -p:Version=${{ env.VERSION }}
 
     - name: Publish
       run: dotnet nuget push "packages/*.nupkg" --source "github" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
