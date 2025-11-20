@@ -18,5 +18,12 @@
 		<Description>Various Extension methods for dealing with Enum, DateOnly, TimeOnly and Numeric types</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Update="Nuget.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
 	
 </Project>
