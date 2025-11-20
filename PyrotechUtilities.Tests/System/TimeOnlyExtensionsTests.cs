@@ -1,5 +1,7 @@
 namespace PyrotechUtilities.Tests.System;
 
+using FluentAssertions;
+
 #if NET6_0_OR_GREATER
 public class TimeOnlyExtensionsTests
 {
@@ -11,7 +13,7 @@ public class TimeOnlyExtensionsTests
 
         var result = timeSpan.ToTimeOnly();
 
-        Assert.Equal(expected, result);
+        result.Should().Be(expected);
     }
 
     [Fact]
@@ -22,7 +24,7 @@ public class TimeOnlyExtensionsTests
 
         var result = timeSpan.ToTimeOnly();
 
-        Assert.Equal(expected, result);
+        result.Should().Be(expected);
     }
 
     [Fact]
@@ -32,7 +34,7 @@ public class TimeOnlyExtensionsTests
 
         var result = timeSpan.ToTimeOnly();
 
-        Assert.Null(result);
+        result.Should().BeNull();
     }
 
     [Fact]
@@ -43,7 +45,7 @@ public class TimeOnlyExtensionsTests
 
         var result = timeOnly.ToTimeSpan();
 
-        Assert.Equal(expected, result);
+        result.Should().Be(expected);
     }
 
     [Fact]
@@ -54,7 +56,7 @@ public class TimeOnlyExtensionsTests
 
         var result = timeOnly.ToTimeSpan();
 
-        Assert.Equal(expected, result);
+        result.Should().Be(expected);
     }
 
     [Fact]
@@ -64,7 +66,7 @@ public class TimeOnlyExtensionsTests
 
         var result = timeOnly.ToTimeSpan();
 
-        Assert.Null(result);
+        result.Should().BeNull();
     }
 }
 #endif
