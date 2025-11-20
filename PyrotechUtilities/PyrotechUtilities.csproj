@@ -16,7 +16,7 @@
 		<Copyright>Copyright 2025 Pyrotech Software</Copyright>
 		<PackageTags>Pyrotech, Utilities, Extensions</PackageTags>
 		<Description>Various Extension methods for dealing with Enum, DateOnly, TimeOnly and Numeric types</Description>
-		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	</PropertyGroup>
 	
 </Project>
