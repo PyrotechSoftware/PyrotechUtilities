@@ -1,6 +1,7 @@
 namespace PyrotechUtilities.Tests.System;
 
 using global::System.ComponentModel;
+using FluentAssertions;
 
 public class EnumExtensionsTests
 {
@@ -20,34 +21,34 @@ public class EnumExtensionsTests
     [Fact]
     public void GetDescription_ReturnsDescriptionAttributeValue()
     {
-        Assert.Equal("First Value", TestEnum.First.GetDescription());
-        Assert.Equal("Second Value", TestEnum.Second.GetDescription());
+        TestEnum.First.GetDescription().Should().Be("First Value");
+        TestEnum.Second.GetDescription().Should().Be("Second Value");
     }
 
     [Fact]
     public void GetDescription_ReturnsEnumNameIfNoDescription()
     {
-        Assert.Equal("Third", TestEnum.Third.GetDescription());
+        TestEnum.Third.GetDescription().Should().Be("Third");
     }
 
     [Fact]
     public void GetDescription_ReturnsNullIfValueIsNull()
     {
         Enum? value = null;
-        Assert.Null(value?.GetDescription());
+        value?.GetDescription().Should().BeNull();
     }
 
     [Fact]
     public void GetIdentification_ReturnsIdentificationAttributeValue()
     {
-        Assert.Equal("ID1", TestEnum.First.GetIdentification());
-        Assert.Equal("ID2", TestEnum.Second.GetIdentification());
+        TestEnum.First.GetIdentification().Should().Be("ID1");
+        TestEnum.Second.GetIdentification().Should().Be("ID2");
     }
 
     [Fact]
     public void GetIdentification_ReturnsEnumNameIfNoIdentification()
     {
-        Assert.Equal("Third", TestEnum.Third.GetIdentification());
+        TestEnum.Third.GetIdentification().Should().Be("Third");
     }
 
     [Fact]
@@ -56,83 +57,83 @@ public class EnumExtensionsTests
         var result = EnumExtensions.GetAllValuesAndDescriptions<TestEnum>();
         var list = new List<EnumValueDescription>(result);
 
-        Assert.Equal(3, list.Count);
-        Assert.Equal(TestEnum.First, list[0].Value);
-        Assert.Equal("First Value", list[0].Description);
-        Assert.Equal(TestEnum.Second, list[1].Value);
-        Assert.Equal("Second Value", list[1].Description);
-        Assert.Equal(TestEnum.Third, list[2].Value);
-        Assert.Equal("Third", list[2].Description);
+        list.Count.Should().Be(3);
+        list[0].Value.Should().Be(TestEnum.First);
+        list[0].Description.Should().Be("First Value");
+        list[1].Value.Should().Be(TestEnum.Second);
+        list[1].Description.Should().Be("Second Value");
+        list[2].Value.Should().Be(TestEnum.Third);
+        list[2].Description.Should().Be("Third");
     }
 
     [Fact]
     public void GetEnumFromDescription_ReturnsEnumValueForDescription()
     {
-        Assert.Equal(TestEnum.First, "First Value".GetEnumFromDescription<TestEnum>());
-        Assert.Equal(TestEnum.Second, "Second Value".GetEnumFromDescription<TestEnum>());
+        "First Value".GetEnumFromDescription<TestEnum>().Should().Be(TestEnum.First);
+        "Second Value".GetEnumFromDescription<TestEnum>().Should().Be(TestEnum.Second);
     }
 
     [Fact]
     public void GetEnumFromDescription_ReturnsNullIfDescriptionNotFound()
     {
-        Assert.Null("Nonexistent".GetEnumFromDescription<TestEnum>());
+        "Nonexistent".GetEnumFromDescription<TestEnum>().Should().BeNull();
     }
 
     [Fact]
     public void GetEnum_ReturnsEnumValueForIdentification()
     {
-        Assert.Equal(TestEnum.First, "ID1".GetEnum<TestEnum>());
-        Assert.Equal(TestEnum.Second, "ID2".GetEnum<TestEnum>());
+        "ID1".GetEnum<TestEnum>().Should().Be(TestEnum.First);
+        "ID2".GetEnum<TestEnum>().Should().Be(TestEnum.Second);
     }
 
     [Fact]
     public void GetEnum_ReturnsEnumValueForDescription()
     {
-        Assert.Equal(TestEnum.First, "First Value".GetEnum<TestEnum>());
-        Assert.Equal(TestEnum.Second, "Second Value".GetEnum<TestEnum>());
+        "First Value".GetEnum<TestEnum>().Should().Be(TestEnum.First);
+        "Second Value".GetEnum<TestEnum>().Should().Be(TestEnum.Second);
     }
 
     [Fact]
     public void GetEnum_ReturnsEnumValueForName()
     {
-        Assert.Equal(TestEnum.First, "First".GetEnum<TestEnum>());
-        Assert.Equal(TestEnum.Third, "Third".GetEnum<TestEnum>());
+        "First".GetEnum<TestEnum>().Should().Be(TestEnum.First);
+        "Third".GetEnum<TestEnum>().Should().Be(TestEnum.Third);
     }
 
     [Fact]
-    public void GetEnum_ReturnsDefaultForNullOrEmpty()
+    public void GetEnum_ReturnsNullForNullOrEmpty()
     {
-        Assert.Equal(default, ((string?)null)?.GetEnum<TestEnum>());
-        Assert.Equal(default, "".GetEnum<TestEnum>());
+        ((string?)null)?.GetEnum<TestEnum>().Should().BeNull();
+        "".GetEnum<TestEnum>().Should().BeNull();
     }
 
     [Fact]
     public void GetEnum_ReturnsNullForInvalidValue()
     {
-        Assert.Null("Invalid".GetEnum<TestEnum>());
+        "Invalid".GetEnum<TestEnum>().Should().BeNull();
     }
 
     [Fact]
     public void In_ReturnsTrueIfValueInList()
     {
         var values = new[] { TestEnum.First, TestEnum.Second };
-        Assert.True(TestEnum.First.In(values));
-        Assert.True(TestEnum.Second.In(values));
+        TestEnum.First.In(values).Should().BeTrue();
+        TestEnum.Second.In(values).Should().BeTrue();
     }
 
     [Fact]
     public void In_ReturnsFalseIfValueNotInList()
     {
         var values = new[] { TestEnum.First, TestEnum.Second };
-        Assert.False(TestEnum.Third.In(values));
+        TestEnum.Third.In(values).Should().BeFalse();
     }
 
     [Fact]
     public void GetEnum_ReturnsNullForWhitespace()
     {
-        Assert.Null(" ".GetEnum<TestEnum>());
-        Assert.Null("\t".GetEnum<TestEnum>());
-        Assert.Null("\n".GetEnum<TestEnum>());
-        Assert.Null("   ".GetEnum<TestEnum>());
+        " ".GetEnum<TestEnum>().Should().BeNull();
+        "\t".GetEnum<TestEnum>().Should().BeNull();
+        "\n".GetEnum<TestEnum>().Should().BeNull();
+        "   ".GetEnum<TestEnum>().Should().BeNull();
     }
 }

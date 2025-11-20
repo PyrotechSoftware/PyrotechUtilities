@@ -1,5 +1,7 @@
 namespace PyrotechUtilities.Tests.System;
 
+using FluentAssertions;
+
 #if NET6_0_OR_GREATER
 public class DateOnlyExtensionsTests
 {
@@ -11,7 +13,7 @@ public class DateOnlyExtensionsTests
 
         var result = dateTime.ToDateOnly();
 
-        Assert.Equal(expected, result);
+        result.Should().Be(expected);
     }
 
     [Fact]
@@ -22,7 +24,7 @@ public class DateOnlyExtensionsTests
 
         var result = dateTime.ToDateOnly();
 
-        Assert.Equal(expected, result);
+        result.Should().Be(expected);
     }
 
     [Fact]
@@ -32,7 +34,7 @@ public class DateOnlyExtensionsTests
 
         var result = dateTime.ToDateOnly();
 
-        Assert.Null(result);
+        result.Should().BeNull();
     }
 
     [Fact]
@@ -43,7 +45,7 @@ public class DateOnlyExtensionsTests
 
         var result = dateOnly.ToDateTime();
 
-        Assert.Equal(expected, result);
+        result.Should().Be(expected);
     }
 
     [Fact]
@@ -54,7 +56,7 @@ public class DateOnlyExtensionsTests
 
         var result = dateOnly.ToDateTime();
 
-        Assert.Equal(expected, result);
+        result.Should().Be(expected);
     }
 
     [Fact]
@@ -64,7 +66,7 @@ public class DateOnlyExtensionsTests
 
         var result = dateOnly.ToDateTime();
 
-        Assert.Null(result);
+        result.Should().BeNull();
     }
 }
 #endif
